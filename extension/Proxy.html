@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XJS Remote - Proxy Extension</title>
+    <script src="../libs/xjs.js"></script>
+    <script src="../libs/socket.io.js"></script>
+    <script>
+        var xjs = require('xjs');
+        var socket = io('http://localhost:3000');
+
+        xjs.ready({
+            remote: {
+                type: 'proxy',
+                sendMessage: function(message) {
+                    socket.emit('proxySendEvent', message);
+                }
+            }
+        });
+
+        socket.on('proxyMessage', (message) => {
+            xjs.Remote.receiveMessage(message);
+        });
+        
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

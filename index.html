@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XJS Remote - Remote</title>
+    <script src="./libs/xjs.js"></script>
+    <script src="./libs/socket.io.js"></script>
+</head>
+<body>
+   <h1 id="current-scene-name">Scene Name</h1> 
+</body>
+<script>
+    const xjs = require('xjs');
+    const socket = io('http://localhost:3000');
+
+    const sceneNameElement = document.getElementById('current-scene-name');
+
+    xjs.ready({
+        remote: {
+            type: 'remote',
+            sendMessage: function(message) {
+                socket.emit('remoteSendEvent', message);
+            }
+        }
+    })
+    .then(() => {
+        // Fetches active scene on page load and sets text value
+        getActiveScene().then(() => {
+            // Listens for any scene changes and updates text value
+            return xjs.ExtensionWindow.on('scene-load', () => {
+                getActiveScene();
+            });
+        });
+    });
+
+    socket.on('remoteMessage', (message) => {
+        xjs.Remote.receiveMessage(message);
+    });
+
+
+    /**
+     * Fetches the active scene and changes the DOM elements text value.
+     *
+     * @return {Promise}
+     */
+    function getActiveScene() {
+        return new Promise((resolve, reject) => {
+            xjs.Scene.getActiveScene().then(scene => {
+                return scene.getName();
+            })
+            .then(name => {
+                sceneNameElement.innerText = name;
+                resolve();
+            })
+            .catch(e => {
+                reject(e);
+            });
+        });
+    }
+    
+    
+</script>
+</html>
