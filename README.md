@@ -2,7 +2,7 @@
 For further documentation, please see https://xjsframework.github.io/tutorials.html#/remotexjs
 
 # Usage
-- Run `npm install` and then `npm start` from the `remote` directory to run the socket/communication server
+- Run `npm install` and then `npm start` from the `server` directory to run the socket/communication server
 - Add /extension/Proxy.html as an extension in XSplit Broadcaster and then make sure it's open/running
 - Open `index.html` in your browser
 
