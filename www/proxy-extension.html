@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XJS Remote - Proxy Extension</title>
-    <script src="../libs/xjs.js"></script>
-    <script src="../libs/socket.io.js"></script>
+</head>
+<body>
+    <script src="/scripts/xjs.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
     <script>
         var xjs = require('xjs');
-        var socket = io('http://localhost:3000');
+        var socket = io();
 
         xjs.ready({
             remote: {
@@ -25,8 +28,5 @@
         
         
     </script>
-</head>
-<body>
-    
 </body>
 </html>
